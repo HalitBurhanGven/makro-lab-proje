@@ -1,0 +1,12 @@
+mimetype
+settings.xml
+Basic/Standard/Module1.xml
+Basic/Standard/script-lb.xml
+Basic/script-lc.xml
+Configurations2/
+styles.xml
+manifest.rdf
+content.xml
+meta.xml
+Thumbnails/thumbnail.png
+META-INF/manifest.xml

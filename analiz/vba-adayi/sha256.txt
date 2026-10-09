@@ -1,0 +1,1 @@
+ec0a0b15a3b771d35250c1af11b31965261d2b86fd5cc9558d78e7bfabf97550  /home/kali/makro-lab-proje/dist/vba-adayi/yetki-deneyi-acilista.xlsm

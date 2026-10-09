@@ -1,0 +1,11 @@
+Archive:  /home/kali/makro-lab-proje/dist/kontrol-makrosuz.ods
+    testing: mimetype                 OK
+    testing: Configurations2/         OK
+    testing: styles.xml               OK
+    testing: manifest.rdf             OK
+    testing: content.xml              OK
+    testing: meta.xml                 OK
+    testing: settings.xml             OK
+    testing: Thumbnails/thumbnail.png   OK
+    testing: META-INF/manifest.xml    OK
+No errors detected in compressed data of /home/kali/makro-lab-proje/dist/kontrol-makrosuz.ods.

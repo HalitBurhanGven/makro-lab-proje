@@ -1,0 +1,1 @@
+/home/kali/makro-lab-proje/dist/vba-adayi/yetki-deneyi-acilista.xlsm: Microsoft Excel 2007+

@@ -1,0 +1,1 @@
+/home/kali/makro-lab-proje/dist/mesaj-acilista.ods: OpenDocument Spreadsheet

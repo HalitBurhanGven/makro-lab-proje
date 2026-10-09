@@ -1,0 +1,2 @@
+/home/kali/makro-lab-proje/analiz/mesaj-manuel/Module1.pretty.xml:9:Sub AcilistaMesaj(oEvent)
+/home/kali/makro-lab-proje/analiz/mesaj-manuel/Module1.xml:9:Sub AcilistaMesaj(oEvent)

@@ -1,0 +1,1 @@
+/home/kali/makro-lab-proje/dist/kontrol-makrosuz.ods: OpenDocument Spreadsheet

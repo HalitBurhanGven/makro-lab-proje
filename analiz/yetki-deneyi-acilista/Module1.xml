@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Module1" script:language="StarBasic">Option Explicit
+
+Const KULLANICI_DIZINI = &quot;/opt/makro-lab/hedef/kullanici-alani/&quot;
+Const ROOT_DIZINI = &quot;/opt/makro-lab/hedef/root-alani/&quot;
+
+Sub ElleYetkiDeneyi
+    YetkiDeneyiniCalistir
+End Sub
+
+Sub AcilistaYetkiDeneyi(oEvent)
+    YetkiDeneyiniCalistir
+End Sub
+
+Sub YetkiDeneyiniCalistir
+    Dim deneyKimligi As String
+    Dim kullaniciHatasi As String
+    Dim rootHatasi As String
+    Dim sonucHatasi As String
+    Dim yedekHatasi As String
+    Dim kullaniciBasarili As Boolean
+    Dim rootBasarili As Boolean
+    Dim sonucMetni As String
+
+    deneyKimligi = GuvenliDeneyKimligi(Environ(&quot;MAKRO_LAB_DENEY_ID&quot;))
+
+    kullaniciBasarili = KanitYaz( _
+        KULLANICI_DIZINI &amp; deneyKimligi &amp; &quot;-kullanici-hedefi.txt&quot;, _
+        HedefMetni(deneyKimligi, &quot;kullanici-alani&quot;), _
+        kullaniciHatasi)
+
+    rootBasarili = KanitYaz( _
+        ROOT_DIZINI &amp; deneyKimligi &amp; &quot;-root-hedefi.txt&quot;, _
+        HedefMetni(deneyKimligi, &quot;root-alani&quot;), _
+        rootHatasi)
+
+    sonucMetni = &quot;deney_kimligi=&quot; &amp; deneyKimligi &amp; Chr(10) &amp; _
+        &quot;belge_makrosu=LibreOffice Basic&quot; &amp; Chr(10) &amp; _
+        &quot;kullanici_alani_basarili=&quot; &amp; LCase(CStr(kullaniciBasarili)) &amp; Chr(10) &amp; _
+        &quot;kullanici_alani_hata=&quot; &amp; TekSatir(kullaniciHatasi) &amp; Chr(10) &amp; _
+        &quot;root_alani_basarili=&quot; &amp; LCase(CStr(rootBasarili)) &amp; Chr(10) &amp; _
+        &quot;root_alani_hata=&quot; &amp; TekSatir(rootHatasi) &amp; Chr(10)
+
+    If Not KanitYaz(KULLANICI_DIZINI &amp; deneyKimligi &amp; &quot;-sonuclar.txt&quot;, sonucMetni, sonucHatasi) Then
+        Call KanitYaz(ROOT_DIZINI &amp; deneyKimligi &amp; &quot;-sonuclar.txt&quot;, _
+            sonucMetni &amp; &quot;sonuc_kaydi_ilk_hata=&quot; &amp; TekSatir(sonucHatasi) &amp; Chr(10), _
+            yedekHatasi)
+    End If
+End Sub
+
+Function HedefMetni(deneyKimligi As String, hedef As String) As String
+    HedefMetni = &quot;MAKRO-LAB ZARARSIZ KANIT&quot; &amp; Chr(10) &amp; _
+        &quot;deney_kimligi=&quot; &amp; deneyKimligi &amp; Chr(10) &amp; _
+        &quot;hedef=&quot; &amp; hedef &amp; Chr(10) &amp; _
+        &quot;aciklama=Bu dosya yalnizca mevcut uygulama yetkisini gostermek icin olusturuldu.&quot; &amp; Chr(10)
+End Function
+
+Function KanitYaz(dosyaYolu As String, icerik As String, ByRef hataMetni As String) As Boolean
+    Dim dosyaNo As Integer
+    dosyaNo = 0
+    hataMetni = &quot;&quot;
+    On Local Error GoTo HataYakala
+
+    If Dir(dosyaYolu) &lt;&gt; &quot;&quot; Then
+        hataMetni = &quot;MEVCUT_DOSYA_EZILMEDI&quot;
+        KanitYaz = False
+        Exit Function
+    End If
+
+    dosyaNo = FreeFile
+    Open dosyaYolu For Output Access Write As #dosyaNo
+    Print #dosyaNo, icerik
+    Close #dosyaNo
+    KanitYaz = True
+    Exit Function
+
+HataYakala:
+    hataMetni = &quot;ERR=&quot; &amp; CStr(Err) &amp; &quot;;DESC=&quot; &amp; Error$
+    On Local Error Resume Next
+    If dosyaNo &lt;&gt; 0 Then Close #dosyaNo
+    KanitYaz = False
+End Function
+
+Function GuvenliDeneyKimligi(hamDeger As String) As String
+    Dim i As Integer
+    Dim karakter As String
+    Dim sonuc As String
+    Dim izinli As String
+
+    izinli = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_&quot;
+    sonuc = &quot;&quot;
+    hamDeger = Left(hamDeger, 64)
+
+    For i = 1 To Len(hamDeger)
+        karakter = Mid(hamDeger, i, 1)
+        If InStr(izinli, karakter) &gt; 0 Then sonuc = sonuc &amp; karakter
+    Next i
+
+    If sonuc = &quot;&quot; Then sonuc = &quot;LO-&quot; &amp; Format(Now, &quot;YYYYMMDD-HHMMSS&quot;)
+    GuvenliDeneyKimligi = sonuc
+End Function
+
+Function TekSatir(deger As String) As String
+    TekSatir = Replace(Replace(deger, Chr(13), &quot; &quot;), Chr(10), &quot; &quot;)
+End Function
+</script:module>

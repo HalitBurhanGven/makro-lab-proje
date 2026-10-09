@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Module1" script:language="StarBasic">Option Explicit
+
+Sub MesajiGoster
+    MsgBox &quot;MAKRO-LAB: Zararsiz belge makrosu mesaji goruntulendi.&quot;, 64, &quot;Makro Laboratuvari&quot;
+End Sub
+
+Sub AcilistaMesaj(oEvent)
+    MesajiGoster
+End Sub
+</script:module>

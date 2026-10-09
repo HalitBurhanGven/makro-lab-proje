@@ -1,0 +1,1 @@
+/home/kali/makro-lab-proje/dist/yetki-deneyi-acilista.ods: OpenDocument Spreadsheet
